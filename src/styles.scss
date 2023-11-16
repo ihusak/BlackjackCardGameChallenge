@@ -1,0 +1,41 @@
+/* You can add global styles to this file, and also import other style files */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'League Gothic', sans-serif;
+  font-family: 'Oswald', sans-serif;
+  font-family: 'Roboto', sans-serif;
+}
+html {
+  background: no-repeat center url("assets/bg.jpg");
+  background-size: cover;
+  overflow: hidden;
+  min-height: 100vh;
+}
+.btn {
+  background: #fff;
+  border-radius: 5px;
+  border: transparent;
+  padding: 10px 15px;
+  &:hover {
+    cursor: pointer;
+    opacity: .9;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 1;
+  }
+}
+h1 {
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+  font-size: 92px;
+  padding: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  text-rendering: optimizeLegibility;
+  &.retroshadow {
+    color: #2c2c2c;
+    letter-spacing: .05em;
+    text-shadow: 4px 4px 0px #d5d5d5, 7px 7px 0px rgba(0,0,0,0.2);
+  }
+}

@@ -1,0 +1,33 @@
+<div class="game-table">
+  <h3>♠ Blackjack</h3>
+  <div class="header">
+    <button *ngIf="!gameReady" (click)="generateDeck()" class="btn">Start game</button>
+  </div>
+  <div *ngIf="gameReady" class="content">
+    <div class="player-field">
+      <app-hand
+        #dealer
+        [busted]="dealerBusted"
+        [handSum]="dealerScore"
+        (drawItemCard)="defineWinner()"
+        playerName="dealer"
+      ></app-hand>
+    </div>
+    <div class="player-field">
+      <app-hand
+        #player
+        [busted]="playerBusted"
+        [handSum]="playerScore"
+        (drawItemCard)="defineWinner()"
+        (endGame)="stand()"
+        (restartGame)="restartGame()"
+        playerName="player"
+      ></app-hand>
+    </div>
+    <div class="winner-container" *ngIf="standing || result">
+      <h1 *ngIf="dealerBusted || whoWin === 'player' && !playerBusted" class="retroshadow">You won</h1>
+      <h1 *ngIf="playerBusted || whoWin === 'dealer' && !dealerBusted" class="retroshadow">Dealer won</h1>
+      <h1 *ngIf="whoWin === 'push'" class="retroshadow">It's tie</h1>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="title">Player score: <strong>{{handSum}}</strong> points</div>
+<div class="card-holder">
+  <div *ngIf="busted" class="busted">Bust</div>
+  <app-card [cards]="cards"></app-card>
+</div>
+<div *ngIf="playerName === playersEnum.player" class="game-actions">
+  <button
+    [disabled]="busted || standing"
+    (click)="drawCard(playersEnum.player)"
+    class="btn"
+  >Hit</button>
+  <button
+    [disabled]="busted || handSum > 21 || handSum == 0 || standing"
+    (click)="stand()"
+    class="btn"
+  >Stand</button>
+  <button
+    [disabled]="handSum < 21 && !standing"
+    (click)="restartGame.emit()"
+    class="btn"
+  >Restart</button>
+</div>
