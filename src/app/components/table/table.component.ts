@@ -17,7 +17,6 @@ export class TableComponent implements OnInit {
   public playerBusted: boolean = false;
   public whoWin: string = '';
   public standing: boolean = false;
-  public winner;
   public result: boolean = false;
   @ViewChild('dealer', {static: false}) dealer: HandComponent;
   @ViewChild('player', {static: false}) player: HandComponent;
@@ -43,9 +42,6 @@ export class TableComponent implements OnInit {
           this.dealer.drawCard();
         }
       }
-      if (res.dealerFinished) {
-        this.winner = this.whoWin;
-      }
       if (this.playerBusted) {
         this.result = true;
       }
@@ -54,7 +50,7 @@ export class TableComponent implements OnInit {
   public stand() {
     this.dealer._openAllCards();
     this.defineWinner();
-    this.standing = this.player.standing;
+    this.standing = true;
   }
   public restartGame() {
     this.dealer.drop();

@@ -16,8 +16,6 @@ router.post('/score', (req, res) => {
     playerScore: playerScore,
     dealerBusted: dealerScore > 21, // busted
     playerBusted: playerScore > 21, // busted
-    continueDealerDraw: dealerScore < 21 && playerScore < 21, // ??
-    dealerFinished: dealerScore >= 21 || dealerScore > playerScore,
     whoWin: defineWinner(dealerScore, playerScore, dealerScore > 21, playerScore > 21)
   };
   res.json(RESULT);

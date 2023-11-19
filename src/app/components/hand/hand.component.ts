@@ -1,8 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {DeckOfCardsService} from '../../services/deckofcards.service';
 import {CardModel} from '../../models/card.model';
-import {ServerService} from '../../services/server.service';
-import {Subscribable, Subscriber} from 'rxjs';
+import {Subscription} from 'rxjs';
 
 enum playersEnum {
   dealer = 'dealer',
@@ -14,22 +13,26 @@ enum playersEnum {
   templateUrl: './hand.component.html',
   styleUrls: ['./hand.component.scss']
 })
-export class HandComponent implements OnInit {
+export class HandComponent implements OnInit, OnDestroy {
   @Input() playerName: string = '';
+  @Input() handSum: number = 0;
+  @Input() busted: boolean;
   @Output() endGame: EventEmitter<any> = new EventEmitter<any>();
   @Output() restartGame: EventEmitter<any> = new EventEmitter<any>();
   @Output() drawItemCard: EventEmitter<any> = new EventEmitter<any>();
   public cards: CardModel[] = [];
   public playersEnum = playersEnum;
   public standing: boolean = false;
-  @Input() handSum: number = 0;
-  @Input() busted: boolean;
-  constructor(private deckOfCardsService: DeckOfCardsService, private serverService: ServerService) { }
+  public subscriptions: Subscription = new Subscription();
+  constructor(private deckOfCardsService: DeckOfCardsService) { }
 
   ngOnInit() {
     this.dealerHand();
   }
-  private dealerHand() {
+  get _playerName() {
+    return this.playerName;
+  }
+  public dealerHand() {
     if (this.playerName === playersEnum.dealer) {
       for (let i = 0; i <= 1; i++) {
         this.drawCard();
@@ -37,7 +40,7 @@ export class HandComponent implements OnInit {
     }
   }
   public drawCard(player?: playersEnum) {
-    return this.deckOfCardsService.getCard().subscribe((data) => {
+    const getCardSub = this.deckOfCardsService.getCard().subscribe((data) => {
       this.cards = [...this.cards, new CardModel(data.cards.pop())].map((card: CardModel) => {
         card.user = player ? playersEnum.player : playersEnum.dealer;
         return card;
@@ -47,6 +50,8 @@ export class HandComponent implements OnInit {
       }
       this.drawItemCard.emit();
     });
+    this.subscriptions.add(getCardSub);
+    return getCardSub;
   }
   public stand() {
     this.standing = true;
@@ -60,5 +65,8 @@ export class HandComponent implements OnInit {
   public drop() {
     this.cards = [];
     this.dealerHand();
+  }
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }

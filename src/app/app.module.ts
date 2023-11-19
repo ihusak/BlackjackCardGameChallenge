@@ -5,20 +5,29 @@ import { AppComponent } from './app.component';
 import { CardComponent } from './components/card/card.component';
 import { TableComponent } from './components/table/table.component';
 import { HandComponent } from './components/hand/hand.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {LoaderInterceptor} from './intercaptors/loader.interceptor';
+import {LoaderComponent} from './components/loader/loader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CardComponent,
     TableComponent,
-    HandComponent
+    HandComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,7 +1,8 @@
-<div class="title">Player score: <strong>{{handSum}}</strong> points</div>
+<div class="title">{{playerName.toUpperCase()}} score: <strong>{{handSum}}</strong> points</div>
 <div class="card-holder">
   <div *ngIf="busted" class="busted">Bust</div>
   <app-card [cards]="cards"></app-card>
+  <app-loader></app-loader>
 </div>
 <div *ngIf="playerName === playersEnum.player" class="game-actions">
   <button
@@ -15,6 +16,7 @@
     class="btn"
   >Stand</button>
   <button
+    id="restart"
     [disabled]="handSum < 21 && !standing"
     (click)="restartGame.emit()"
     class="btn"
