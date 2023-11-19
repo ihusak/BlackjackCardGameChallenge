@@ -9,8 +9,7 @@ const EXAMPLE_RESPONSE: ScoreResponse = {
   dealerScore: 10,
   playerBusted: false,
   playerScore: 0,
-  whoWin: '',
-  dealerFinished: false
+  whoWin: ''
 };
 
 const EXAMPLE_CARD: CardModel = {

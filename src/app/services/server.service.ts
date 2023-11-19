@@ -10,7 +10,6 @@ export interface ScoreResponse {
   playerBusted: boolean;
   playerScore: number;
   whoWin: string;
-  dealerFinished?: boolean;
 }
 
 @Injectable({
@@ -19,7 +18,7 @@ export interface ScoreResponse {
 export class ServerService {
   private apiUrl = 'http://localhost:3000/api';
   constructor(private http: HttpClient) { }
-
+  // send users cards to server to calculate score and define the winner
   public playersScore(cards: CardModel[]): Observable<ScoreResponse> {
     return this.http.post(`${this.apiUrl}/score`, cards).pipe(map((res: any) => {
       return {
@@ -28,7 +27,6 @@ export class ServerService {
         playerBusted: res.playerBusted,
         playerScore: res.playerScore,
         whoWin: res.whoWin,
-        dealerFinished: res.dealerFinished
       };
     }));
   }
