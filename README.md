@@ -17,7 +17,7 @@ Run `npm run test` to execute the unit tests via [Karma](https://karma-runner.gi
 
 ## Running unit tests server
 
-Run `npm run tserver` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `npm run tserver` to execute the unit tests via Jasmine.
 
 ## Running end-to-end tests
 
